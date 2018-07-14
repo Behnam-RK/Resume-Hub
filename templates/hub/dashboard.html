@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Dashboard - Resume Hub{% endblock %}
+
+{% block content_main %}
+<h2 style="text-align: center;">
+    Dashboard
+</h2>
+<hr style="border-top: 1px solid #cccccc;">
+{% if registered %}
+    <h4>Successfully Uploaded!</h4>
+{% else %}
+    <h3>Upload Your Resume:</h3>
+
+    <form enctype="multipart/form-data" method="POST" action="{% url 'hub:dashboard' %}">
+        {% csrf_token %}
+        {% if current_file %}
+            <p>Your cuurently resume: <a href="{{ current_file.url }}" style="color: #044085;">{{ current_file }}</a></p> 
+        {% else %}
+        {% endif %}
+        {{ resume_form.as_p }}
+        <br>
+        <input type="submit" name="upload" value="Upload" style="margin-left: 30px;">
+    </form>
+{% endif %}
+<br>
+<hr style="border-top: 1px solid #cccccc;">
+<h6><a href="{% url 'hub:change_password' %}" style="color: blue;">Change Password?</a></h6>
+<h6><a href="{% url 'hub:change_profile_pic' %}" style="color: blue;">Change Profile Picture?</a></h6>
+
+{% endblock %}

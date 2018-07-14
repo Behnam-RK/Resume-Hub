@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Register - Resume Hub{% endblock %}
+
+{% block content_main %}
+<h2 style="text-align: center;">
+    Register
+</h2>
+<hr style="border-top: 1px solid #cccccc;">
+{% if registered %}
+    <h4>Successfully Registered!</h4>
+{% else %}
+    <form action="{% url 'hub:register' %}" method="POST">
+        {% csrf_token %}
+        {{ register_form.as_p }}
+        <br>
+        <input type="submit" name="register" value="Register" style="margin-left: 30px;">
+    </form>
+{% endif %}
+
+{% endblock %}

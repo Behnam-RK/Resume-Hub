@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> {% endcomment %}
+    <script src="{% static "global/libs/jquery.min.js" %}"></script>
+    <script src="{% static "global/script.js" %}"></script>
+    <link rel="stylesheet" href="{% static "global/style.css" %}">
+    <title>{% block head_title %}Resume Hub{% endblock %}</title>
+  </head>
+
+  <body class="w3-light-grey">
+
+    <!-- Navigation Bar -->
+    <div class="w3-bar w3-light-grey w3-large">
+      <a href="{% url 'hub:index' %}" class="w3-bar-item w3-button w3-red w3-mobile" style="
+      padding-left: 0px;"><i class="fa fa-bed w3-margin-right"></i>Resume Hub</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'hub:dashboard' %}" class="w3-bar-item w3-button w3-light-grey w3-mobile">Dashboard</a>
+      {% else %}
+        <a href="{% url 'hub:register' %}" class="w3-bar-item w3-button w3-light-grey w3-mobile">Register</a>
+      {% endif %}
+      
+      <a href="{% url 'hub:doc' %}" class="w3-bar-item w3-button w3-right w3-green w3-mobile">Project Documentation</a>
+      <a href="{% url 'hub:about' %}" class="w3-bar-item w3-button w3-right w3-light-grey w3-mobile">About</a>
+      {% comment %} <a href="#contact" class="w3-bar-item w3-button w3-right w3-light-grey w3-mobile">Contact</a> {% endcomment %}
+      {% comment %} <a href="#contact" class="w3-bar-item w3-button w3-right w3-light-grey w3-mobile">Book Now</a> {% endcomment %}
+    </div>
+
+    <div class="w3-content" style="max-width:1100px">
+      <header class="w3-container w3-center w3-padding-32 w3-border-bottom">
+        <a href="/" id="main_title"><h1>{% block title %}Resume Hub{% endblock %}</h1></a>
+      </header>
+      <div class="w3-row">
+        <div id="main_content", class="w3-col m9 w3-margin-left w3-margin-right w3-border-right">
+
+          {% block content_main %}{% endblock %}
+
+        </div>
+        <div class="w3-col m2 w3-margin-left">
+            {% block content_side %}
+                {% if user.is_authenticated %}
+                  <br>
+                  <div style="text-align: center;">
+                  {% if user.userprofile.picture %}
+                    <img class="profile-pic" src="{{ user.userprofile.picture.url }}" alt="">
+                  {% else %}
+                    <img class="profile-pic" src="{% static "avatar.png" %}" alt="">
+                  {% endif %}
+                  </div>
+                  <h6>Welcome {{ user.first_name }}</h6>
+                  <h6><a href="{% url 'hub:change_password' %}" style="color: blue;">Change Password?</a></h6>
+                  <h6><a href="{% url 'hub:change_profile_pic' %}" style="color: blue;">Change Profile Picture?</a></h6>
+                  <h6><a href="{% url 'hub:logout' %}" style="color: blue;">Logout?</a></h6>
+                  <br>
+                  <h5><a href="{% url 'hub:dashboard' %}" style="color: #941515; background-color: rgb(140, 235, 206)">Upload Your Resume Now!</a></h5>
+                
+              {% else %}
+
+                  
+                    <h2>
+                      Login
+                    </h2>
+                    
+                    <br>
+
+                    <form action="{% url 'hub:login' %}" method="POST">
+                      {% csrf_token %}
+                      <label for="username">Username:</label>
+                      <input type="text", name="username">
+
+                      <br><br>
+
+                      <label for="password">Password:</label>
+                      <input type="password", name="password">
+
+                      <br><br>
+
+                      <input type="submit" name="" value="Login">
+                    </form>
+
+
+              {% endif %}
+          {% endblock %}
+        
+        
+          
+        </div>
+      </div>
+    </div>
+    <div style="margin-bottom: 400px;">
+    </div>
+  </body>
+</html>

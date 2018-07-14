@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_title %}Error - Resume Hub{% endblock %}
+
+{% block content_main %}
+    <h2 style="text-align: center;">
+        Error!
+    </h2>
+    <hr style="border-top: 1px solid #cccccc;">
+
+    <br>
+    {% if error_message %}
+        <h4>{{ error_message }}</h4>
+    {% else %}
+        {{ error_message_alter }}
+    {% endif %}
+    
+{% endblock %}

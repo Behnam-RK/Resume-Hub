@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_title %}Resume - Resume Hub{% endblock %}
+
+{% block content_main %}
+<h2 style="text-align: center;">
+    Resume
+</h2>
+<hr style="border-top: 1px solid #cccccc;">
+  {% if resume %}
+          {% if resume.resume_file %}
+              <div style="min-height: 150px;">
+                  <div style="text-align: center;margin-bottom:30px;">
+                    {% if resume.picture %}
+                        <img class="profile-pic-big" src="{{ resume.picture.url }}" alt="">
+                    {% else %}
+                        <img class="profile-pic-big" src="{% static "avatar.png" %}" alt="">
+                    {% endif %}
+                  </div>
+
+                  <div>
+                      <div><b><h3>{{ resume.fullname }}</h3></b></div>
+                      <div><p>{{ resume.description }}</p></div>
+                      <div><h5><a class="more_link" href="{{ resume.resume_file.url }}">Download This Resume!</a></h5></div>
+                  </div>
+              </div>
+              <hr style="border-top: 1px solid #cccccc;">
+
+              <div>
+                  <h3 style="text-align: center;">Comments:</h3>
+                  <br>
+                  {% comment %} <hr style="border-top: 1px solid #cccccc;"> {% endcomment %}
+                    {% if comments %}
+                        {% for comment in comments %}
+
+                        <div style="min-height: 50px;">
+                                <div style="float:left;margin-right:15px;margin-bottom:10px;">
+                                    {% if comment.user.userprofile.picture %}
+                                        <img class="profile-pic-small" src="{{ comment.user.userprofile.picture.url }}" alt="">
+                                    {% else %}
+                                        <img class="profile-pic-small" src="{% static "avatar.png" %}" alt="">
+                                    {% endif %}
+                                </div>
+                
+                                <div style="margin-right:5px;margin-left:85px;">
+                                    <div><b><h6>{{ comment.user.get_full_name }}</h6></b></div>
+                                    <div><p>{{ comment.content }}</p></div>
+                                </div>
+                        </div>
+                        <hr style="border-top: 1px solid #cccccc;">
+                                        
+                        {% endfor %}
+                    
+                    {% else %}
+                        <h6><span style="color: white; background-color: darkolivegreen;">No comments yet!</span></h6>
+                    {% endif %}
+                        
+                        {% if user.is_authenticated %}
+                            <div style="min-height: 50px;">
+                                <div style="float:left;margin-right:15px;margin-bottom:10px;">
+                                {% if user.userprofile.picture %}
+                                    <img class="profile-pic-small" src="{{ user.userprofile.picture.url }}" alt="">
+                                {% else %}
+                                    <img class="profile-pic-small" src="{% static "avatar.png" %}" alt="">
+                                {% endif %}
+                                </div>
+
+                                <form action="{% url 'hub:comment' %}" method="POST" style="margin-top: 50px;">
+                                        {% csrf_token %}
+                                        {{ comment_form.content }}
+                                        <br>
+                                        <input type="hidden" name="resume_id" value="{{ resume.id }}">
+                                        <input type="submit" name="submit" value="Submit" style="">
+                                </form>
+
+                            </div>
+                                
+                            {% else %}
+                                <h6><span style="color: white; background-color: darkolivegreen;">You must be logged in to post a comment</span></h6>
+                            {% endif %}
+                    
+                  
+              </div>
+
+          {% else %}
+                <p>
+                    
+                </p>
+          {% endif %}
+        
+  {% else %}
+    <p>
+        <span style="color: white; background-color: darkolivegreen;">Not Found.</span>
+    </p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_title %}Change Profile Picture - Resume Hub{% endblock %}
+
+{% block content_main %}
+<h2 style="text-align: center;">
+    Change Profile Picture
+</h2>
+<hr style="border-top: 1px solid #cccccc;">
+
+{% if profile_pic_changed %}
+    <h4>Your Profile Picture Successfully Changed!</h4>
+    {% if user.userprofile.picture %}    
+    <img class="profile-pic" src="{{ user.userprofile.picture.url }}" alt="">
+    {% else %}
+    {% endif %}
+{% else %}
+
+    {% comment %} <h5>Your Cuurently Profile Picture:</h5>
+    {% if user.userprofile.picture %}    
+    <img class="profile-pic" src="{{ user.userprofile.picture.url }}" alt="">
+    {% else %}
+    <img class="profile-pic" src="{% static "avatar.png" %}" alt="">
+    {% endif %}
+
+    <br><br> {% endcomment %}
+
+    <form enctype="multipart/form-data" action="{% url 'hub:change_profile_pic' %}" method="POST">
+        {% csrf_token %}
+
+        {% if current_picture %}
+            <p>cuurent file: <a href="{{ current_picture.url }}" style="color: #044085;">{{ current_picture }}</a></p> 
+        {% else %}
+        {% endif %}
+
+        {{ change_profile_pic_form.as_p }}
+        <br>
+        <input type="submit" name="change_profile_pic_form" value="Submit" style="margin-left: 30px;">
+    </form>
+{% endif %}
+
+{% endblock %}

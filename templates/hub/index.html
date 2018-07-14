@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content_main %}
+<h2 style="text-align: center;">
+    Recent Resumes
+</h2>
+<hr style="border-top: 1px solid #cccccc;">
+  {% if resumes.count > 0 %}
+      {% for resume in resumes %}
+          {% if resume.resume_file %}
+              <div style="min-height: 150px;">
+                  <div style="float:left;margin-right:30px;margin-bottom:20px;">
+                    {% if resume.picture %}
+                        <img class="profile-pic" src="{{ resume.picture.url }}" alt="">
+                    {% else %}
+                        <img class="profile-pic" src="{% static "avatar.png" %}" alt="">
+                    {% endif %}
+                  </div>
+
+                  <div style="margin-right:10px;margin-left:180px;">
+                      <div><b><h3><a href="{% url 'hub:resume' resume.id %}">{{ resume.fullname }}</a></h3></b></div>
+                      <div><p>{{ resume.summary }}<a class="more_link" href="{% url 'hub:resume' resume.id %}"> more &gt;</a></p></div>
+                  </div>
+              </div>
+              <hr style="border-top: 1px solid #cccccc;">
+          {% else %}
+          {% endif %}
+        
+      {% endfor %}
+  {% else %}
+    <p>
+      There are no resumes.
+    </p>
+  {% endif %}
+{% endblock %}
