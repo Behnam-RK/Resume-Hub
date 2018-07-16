@@ -7,7 +7,7 @@
     Recent Resumes
 </h2>
 <hr style="border-top: 1px solid #cccccc;">
-  {% if resumes.count > 0 %}
+  {% if resumes %}
       {% for resume in resumes %}
           {% if resume.resume_file %}
               <div style="min-height: 150px;">

@@ -27,8 +27,9 @@ def index(request):
     if len(resumes) > 20:
         resumes = resumes[:20]
 
-    resumes = [to_dict(resume) for resume in resumes]
-    data['resumes'] = resumes
+    resumes = [to_dict(resume) for resume in resumes if resume.resume_file]
+    if len(resumes) > 0:
+        data['resumes'] = resumes
 
     return render(request, 'hub/index.html', context=data)
 
