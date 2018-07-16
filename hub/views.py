@@ -451,7 +451,7 @@ def error(request, error_title):
 
 def summary(post_body):
     ''' Summerizes a long text with regular expressions '''
-    return re.search(r'^.{0,170}[\s]', post_body).group()
+    return re.search(r'^.{0,180}[\s]', post_body).group()
 
 def to_dict(resume):
     ''' converts a database object to a dict object '''
