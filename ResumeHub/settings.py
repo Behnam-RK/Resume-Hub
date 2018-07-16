@@ -26,6 +26,7 @@ SECRET_KEY = '6992ih634k@_tzx*-2*jwy009oljfxjgzpwoa+anjrx$wmy21)'
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     'behnamrk.pythonanywhere.com'
 ]
 
@@ -123,6 +124,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, '_static')
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [

@@ -1,6 +1,9 @@
 # media folder
 media/
 
+# static root
+_static/
+
 # tests folder
 # tests/
 
