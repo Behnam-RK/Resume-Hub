@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    'behnamrk.pythonanywhere.com'
+    'behnamrk.pythonanywhere.com',
+    'resume-hub.herokuapp.com'
 ]
 
 
